@@ -107,12 +107,25 @@ const AdminPetFormPage = () => {
     setPreviews(newPreviews);
   };
 
+  const handleRemoveSelectedFile = (idxToRemove) => {
+    // Revoke the object URL to avoid memory leak
+    URL.revokeObjectURL(previews[idxToRemove]);
+    
+    // Update files and previews
+    const newFiles = selectedFiles.filter((_, idx) => idx !== idxToRemove);
+    const newPreviews = previews.filter((_, idx) => idx !== idxToRemove);
+    
+    setSelectedFiles(newFiles);
+    setPreviews(newPreviews);
+  };
+
   const handleUpload = () => {
     if (!selectedFiles.length || !id) return;
     const formData = new FormData();
     selectedFiles.forEach((file) => formData.append('images', file));
     dispatch(uploadImagesRequest({ petId: id, formData }));
     setSelectedFiles([]);
+    setPreviews([]); // Clear previews after upload
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -130,14 +143,15 @@ const AdminPetFormPage = () => {
       {error && <Alert variant="danger">{error}</Alert>}
       <Card className="mb-4 shadow-sm">
         <Card.Body>
-          <PetForm
-            values={values}
-            onChange={setValues}
-            onFileChange={handleFileChange}
-            onSubmit={handleSubmit}
-            loading={loading}
-            previews={previews}
-          />
+            <PetForm
+              values={values}
+              onChange={setValues}
+              onFileChange={handleFileChange}
+              onRemoveSelectedFile={handleRemoveSelectedFile}
+              onSubmit={handleSubmit}
+              loading={loading}
+              previews={previews}
+            />
         </Card.Body>
       </Card>
 

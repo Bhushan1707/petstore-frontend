@@ -2,9 +2,14 @@ import React from 'react';
 import { Form, Button, Row, Col, Image, Badge } from 'react-bootstrap';
 import { getImageUrl } from '../../utils/getImageUrl';
 
-const PetForm = ({ values, onChange, onFileChange, onSubmit, loading, previews }) => {
+const PetForm = ({ values, onChange, onFileChange, onSubmit, loading, previews, onRemoveSelectedFile }) => {
   const handleChange = (e) => {
     onChange({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const removeExistingPhoto = (idxToRemove) => {
+    const updated = values.photoUrls.filter((_, idx) => idx !== idxToRemove);
+    onChange({ ...values, photoUrls: updated });
   };
 
   return (
@@ -69,25 +74,45 @@ const PetForm = ({ values, onChange, onFileChange, onSubmit, loading, previews }
               {/* Existing Images */}
               {values.photoUrls?.map((url, idx) => (
                 url && (
-                  <div key={`existing-${idx}`} className="position-relative border rounded p-1" style={{ width: '80px', height: '80px' }}>
+                  <div key={`existing-${idx}`} className="position-relative border rounded p-1 shadow-sm" style={{ width: '100px', height: '100px' }}>
                     <Image 
                       src={getImageUrl(url, values.name)} 
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       className="rounded"
                     />
-                    <Badge bg="info" className="position-absolute top-0 start-0 m-1" style={{ fontSize: '10px' }}>Old</Badge>
+                    <Badge bg="info" className="position-absolute top-0 start-0 m-1" style={{ fontSize: '10px' }}>Existed</Badge>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      className="position-absolute top-0 end-0 m-1 py-0 px-1"
+                      onClick={() => removeExistingPhoto(idx)}
+                      style={{ fontSize: '12px', lineHeight: '1' }}
+                      title="Remove from pet photos"
+                    >
+                      &times;
+                    </Button>
                   </div>
                 )
               ))}
               {/* New Previews */}
               {previews?.map((url, idx) => (
-                <div key={`new-${idx}`} className="position-relative border rounded p-1" style={{ width: '80px', height: '80px', borderColor: '#0d6efd' }}>
+                <div key={`new-${idx}`} className="position-relative border rounded p-1 shadow-sm" style={{ width: '100px', height: '100px', borderColor: '#0d6efd' }}>
                   <Image 
                     src={url} 
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     className="rounded"
                   />
                   <Badge bg="primary" className="position-absolute top-0 start-0 m-1" style={{ fontSize: '10px' }}>New</Badge>
+                  <Button
+                    variant="warning"
+                    size="sm"
+                    className="position-absolute top-0 end-0 m-1 py-0 px-1"
+                    onClick={() => onRemoveSelectedFile(idx)}
+                    style={{ fontSize: '12px', lineHeight: '1' }}
+                    title="Deselect file"
+                  >
+                    &times;
+                  </Button>
                 </div>
               ))}
             </div>
