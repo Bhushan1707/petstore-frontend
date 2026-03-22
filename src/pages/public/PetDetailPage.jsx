@@ -18,7 +18,7 @@ const PetDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, role } = useAuth();
 
   const pet = useSelector(selectPet);
   const loading = useSelector(selectPetLoading);
@@ -76,9 +76,11 @@ const PetDetailPage = () => {
           <p className="text-muted mb-1"><strong>Species:</strong> {pet.species}</p>
           <p className="text-muted mb-1"><strong>Breed:</strong> {pet.breed}</p>
           <p className="text-muted mb-3"><strong>Age:</strong> {pet.age} {pet.age === 1 ? 'year' : 'years'}</p>
-          {pet.description && <p>{pet.description}</p>}
+          {pet.description && <p className="mb-4">{pet.description}</p>}
+          
+          <hr />
 
-          {isAuthenticated && pet.status === 'available' && !applied && (
+          {isAuthenticated && role !== 'admin' && pet.status === 'available' && !applied && (
             <div className="mt-3">
               <h6>Apply for Adoption</h6>
               {adoptionError && <Alert variant="danger">{adoptionError}</Alert>}

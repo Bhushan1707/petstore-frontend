@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Image, Badge } from 'react-bootstrap';
+import { getImageUrl } from '../../utils/getImageUrl';
 
-const PetForm = ({ values, onChange, onFileChange, onSubmit, loading }) => {
+const PetForm = ({ values, onChange, onFileChange, onSubmit, loading, previews }) => {
   const handleChange = (e) => {
     onChange({ ...values, [e.target.name]: e.target.value });
   };
@@ -61,6 +62,36 @@ const PetForm = ({ values, onChange, onFileChange, onSubmit, loading }) => {
             />
             <small className="text-muted d-block mt-1">Select multiple images to upload directly (max 5 files).</small>
           </Form.Group>
+          
+          {/* Combined Image Previews (Existing + New) */}
+          {(values.photoUrls?.length > 0 || previews?.length > 0) && (
+            <div className="d-flex flex-wrap gap-2 mb-3">
+              {/* Existing Images */}
+              {values.photoUrls?.map((url, idx) => (
+                url && (
+                  <div key={`existing-${idx}`} className="position-relative border rounded p-1" style={{ width: '80px', height: '80px' }}>
+                    <Image 
+                      src={getImageUrl(url, values.name)} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      className="rounded"
+                    />
+                    <Badge bg="info" className="position-absolute top-0 start-0 m-1" style={{ fontSize: '10px' }}>Old</Badge>
+                  </div>
+                )
+              ))}
+              {/* New Previews */}
+              {previews?.map((url, idx) => (
+                <div key={`new-${idx}`} className="position-relative border rounded p-1" style={{ width: '80px', height: '80px', borderColor: '#0d6efd' }}>
+                  <Image 
+                    src={url} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    className="rounded"
+                  />
+                  <Badge bg="primary" className="position-absolute top-0 start-0 m-1" style={{ fontSize: '10px' }}>New</Badge>
+                </div>
+              ))}
+            </div>
+          )}
         </Col>
         <Col md={12}>
           <Form.Group className="mb-3">

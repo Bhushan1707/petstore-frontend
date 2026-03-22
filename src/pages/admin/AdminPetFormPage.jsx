@@ -31,6 +31,12 @@ const AdminPetFormPage = () => {
   const [values, setValues] = useState(initialValues);
   const [submitted, setSubmitted] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
+
+  // Clean up object URLs to avoid memory leaks
+  useEffect(() => {
+    return () => previews.forEach(url => URL.revokeObjectURL(url));
+  }, [previews]);
 
   useEffect(() => {
     dispatch(clearGallery());
@@ -93,7 +99,12 @@ const AdminPetFormPage = () => {
   };
 
   const handleFileChange = (e) => {
-    setSelectedFiles(Array.from(e.target.files));
+    const files = Array.from(e.target.files);
+    setSelectedFiles(files);
+    
+    // Generate previews
+    const newPreviews = files.map(file => URL.createObjectURL(file));
+    setPreviews(newPreviews);
   };
 
   const handleUpload = () => {
@@ -125,6 +136,7 @@ const AdminPetFormPage = () => {
             onFileChange={handleFileChange}
             onSubmit={handleSubmit}
             loading={loading}
+            previews={previews}
           />
         </Card.Body>
       </Card>

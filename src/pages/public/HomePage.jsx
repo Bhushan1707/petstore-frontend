@@ -28,7 +28,7 @@ const HomePage = () => {
 
   return (
     <Container className="py-4">
-      <h1 className="mb-4">🐾 Find Your Perfect Pet</h1>
+      <h1 className="page-title fade-in">🐾 Find Your Perfect Pet</h1>
       <PetFilters filters={filters} onChange={handleFilterChange} onReset={handleReset} />
       {loading && <Loader />}
       {error && <Alert variant="danger">{error}</Alert>}

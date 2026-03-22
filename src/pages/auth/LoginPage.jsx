@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Alert, Card, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { loginRequest } from '../../redux/auth/authSlice';
 import { selectAuthLoading, selectAuthError, selectIsAuthenticated } from '../../redux/auth/authSelectors';
 import { ROUTES } from '../../constants/routes';
@@ -33,23 +34,24 @@ const LoginPage = () => {
 
   return (
     <Container className="py-5 d-flex justify-content-center">
-      <Card style={{ width: '100%', maxWidth: '420px' }} className="shadow p-4">
-        <h3 className="mb-4 text-center">🔐 Login</h3>
-        {error && <Alert variant="danger">{error}</Alert>}
+      <Card style={{ width: '100%', maxWidth: '420px' }} className="shadow p-4 border-0 rounded-4">
+        <h3 className="mb-4 text-center fw-bold text-primary">🔐 Login</h3>
+        {error && <Alert variant="danger" className="py-2 small">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
+            <Form.Label className="small fw-semibold text-muted">Email Address</Form.Label>
             <Form.Control
               type="email"
               name="email"
               value={form.email}
               onChange={handleChange}
               placeholder="you@example.com"
+              className="py-2 border-0 bg-light"
               required
             />
           </Form.Group>
           <Form.Group className="mb-4">
-            <Form.Label>Password</Form.Label>
+            <Form.Label className="small fw-semibold text-muted">Password</Form.Label>
             <InputGroup>
               <Form.Control
                 type={showPassword ? 'text' : 'password'}
@@ -57,19 +59,21 @@ const LoginPage = () => {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="••••••••"
+                className="py-2 border-0 bg-light"
                 required
               />
               <Button 
-                variant="outline-secondary" 
+                variant="light" 
+                className="border-0 text-muted"
                 onClick={() => setShowPassword(!showPassword)}
                 style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
               >
-                {showPassword ? '👁️' : '🙈'}
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
               </Button>
             </InputGroup>
           </Form.Group>
-          <Button type="submit" variant="primary" className="w-100" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          <Button type="submit" variant="primary" className="w-100 py-2 fw-bold shadow-sm" disabled={loading}>
+            {loading ? 'Logging in...' : 'Sign In'}
           </Button>
         </Form>
         <p className="text-center mt-3 mb-3">

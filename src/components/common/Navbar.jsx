@@ -19,7 +19,7 @@ const AppNavbar = () => {
   };
 
   return (
-    <BsNavbar bg="dark" variant="dark" expand="lg" sticky="top">
+    <BsNavbar expand="lg" sticky="top" className="navbar shadow-sm">
       <Container>
         <BsNavbar.Brand as={Link} to={ROUTES.HOME}>🐾 PetAdopt</BsNavbar.Brand>
         <BsNavbar.Toggle aria-controls="main-nav" />
@@ -47,7 +47,7 @@ const AppNavbar = () => {
                 <BsNavbar.Text className="me-3">
                   👤 {user?.name}
                 </BsNavbar.Text>
-                <Button variant="outline-light" size="sm" onClick={handleLogout}>
+                <Button variant="outline-primary" size="sm" onClick={handleLogout}>
                   Logout
                 </Button>
               </>
