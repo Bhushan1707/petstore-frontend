@@ -9,7 +9,7 @@ import { selectGalleryImages, selectGalleryUploading, selectGalleryError } from 
 import PetForm from '../../components/pets/PetForm';
 import Loader from '../../components/common/Loader';
 import { ROUTES } from '../../constants/routes';
-import { CONFIG } from '../../config/config';
+import { toast } from 'react-hot-toast';
 import { getImageUrl } from '../../utils/getImageUrl';
 
 const initialValues = { name: '', species: '', breed: '', age: '', description: '', photoUrl: '', photoUrls: [''], status: 'available' };
@@ -63,9 +63,8 @@ const AdminPetFormPage = () => {
 
   useEffect(() => {
     if (submitted && !loading && !error) {
-      if (!isEditing) {
-        navigate(ROUTES.ADMIN_PETS);
-      }
+      toast.success(isEditing ? 'Pet updated successfully!' : 'Pet created successfully!');
+      navigate(ROUTES.ADMIN_PETS);
     }
   }, [submitted, loading, error, navigate, isEditing]);
 

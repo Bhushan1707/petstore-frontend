@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Table, Button, Alert, Badge, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchPetsRequest, deletePetRequest } from '../../redux/pets/petSlice';
-import { selectPets, selectPetLoading, selectPetError } from '../../redux/pets/petSelectors';
+import { selectPets, selectPetLoading, selectPetError, selectPagination } from '../../redux/pets/petSelectors';
 import Loader from '../../components/common/Loader';
+import PaginationBar from '../../components/common/PaginationBar';
 import { ROUTES } from '../../constants/routes';
+import { toast } from 'react-hot-toast';
 import { getImageUrl } from '../../utils/getImageUrl';
 
 const statusVariant = { available: 'success', pending: 'warning', adopted: 'secondary' };
@@ -16,14 +18,20 @@ const AdminPetsPage = () => {
   const pets = useSelector(selectPets);
   const loading = useSelector(selectPetLoading);
   const error = useSelector(selectPetError);
+  const { totalPages, currentPage } = useSelector(selectPagination);
+  const [page, setPage] = useState(1);
+  const limit = 8;
 
   useEffect(() => {
-    dispatch(fetchPetsRequest({ limit: 8 }));
-  }, [dispatch]);
+    dispatch(fetchPetsRequest({ page, limit }));
+  }, [dispatch, page]);
+
+  const handlePageChange = (newPage) => setPage(newPage);
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this pet?')) {
       dispatch(deletePetRequest(id));
+      toast.success('Pet deleted successfully!');
     }
   };
 
@@ -94,6 +102,13 @@ const AdminPetsPage = () => {
           )}
         </tbody>
       </Table>
+      {!loading && !error && pets.length > 0 && (
+        <PaginationBar
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </Container>
   );
 };

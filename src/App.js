@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
 import AppNavbar from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import { getMeRequest } from './redux/auth/authSlice';
@@ -28,6 +29,7 @@ function App() {
 
   return (
     <BrowserRouter basename="/petstore-frontend">
+      <Toaster position="top-right" reverseOrder={false} />
       <AppNavbar />
       <Routes>
         {/* Public routes */}

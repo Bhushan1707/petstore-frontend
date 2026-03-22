@@ -3,19 +3,11 @@ import { Card, Badge, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getImageUrl } from '../../utils/getImageUrl';
 
-const statusVariant = {
-  available: 'success',
-  pending: 'warning',
-  adopted: 'secondary',
-};
-
 const PetCard = ({ pet }) => {
   const imgSrc = getImageUrl(
     (pet.photoUrls && pet.photoUrls.length > 0 && pet.photoUrls[0]) || pet.photoUrl,
     pet.name
   );
-
-  const { ROUTES } = require('../../constants/routes'); // I'll just use the string for now to be safe or import it correctly if I can. Wait, I should import it.
 
   return (
     <Card className="pet-card h-100 shadow-sm border-0">
