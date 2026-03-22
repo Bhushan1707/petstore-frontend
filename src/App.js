@@ -27,7 +27,7 @@ function App() {
   }, [dispatch, isAuthenticated]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/petstore-frontend">
       <AppNavbar />
       <Routes>
         {/* Public routes */}
