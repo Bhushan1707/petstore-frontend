@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/petstore-frontend/static/css/main.a9a44919.css",
-    "main.js": "/petstore-frontend/static/js/main.2931e8f5.js",
+    "main.css": "/petstore-frontend/static/css/main.5fec2ec5.css",
+    "main.js": "/petstore-frontend/static/js/main.2b202fbb.js",
     "index.html": "/petstore-frontend/index.html",
-    "main.a9a44919.css.map": "/petstore-frontend/static/css/main.a9a44919.css.map",
-    "main.2931e8f5.js.map": "/petstore-frontend/static/js/main.2931e8f5.js.map"
+    "main.5fec2ec5.css.map": "/petstore-frontend/static/css/main.5fec2ec5.css.map",
+    "main.2b202fbb.js.map": "/petstore-frontend/static/js/main.2b202fbb.js.map"
   },
   "entrypoints": [
-    "static/css/main.a9a44919.css",
-    "static/js/main.2931e8f5.js"
+    "static/css/main.5fec2ec5.css",
+    "static/js/main.2b202fbb.js"
   ]
 }
