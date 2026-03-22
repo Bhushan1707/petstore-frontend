@@ -97,10 +97,10 @@ const AdminPetFormPage = () => {
   };
 
   const handleUpload = () => {
-    if (!selectedFiles.length || !savedPetId) return;
+    if (!selectedFiles.length || !id) return;
     const formData = new FormData();
     selectedFiles.forEach((file) => formData.append('images', file));
-    dispatch(uploadImagesRequest({ petId: savedPetId, formData }));
+    dispatch(uploadImagesRequest({ petId: id, formData }));
     setSelectedFiles([]);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
@@ -129,8 +129,8 @@ const AdminPetFormPage = () => {
         </Card.Body>
       </Card>
 
-      {/* Gallery section — only show if we have a pet ID to upload to */}
-      {(isEditing && savedPetId) && (
+      {/* Gallery section — only show if we are editing an existing pet */}
+      {isEditing && (
         <Card className="shadow-sm">
           <Card.Body>
             <Card.Title>📸 Pet Gallery</Card.Title>
