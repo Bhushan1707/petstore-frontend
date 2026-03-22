@@ -18,7 +18,7 @@ const AdminPetsPage = () => {
   const error = useSelector(selectPetError);
 
   useEffect(() => {
-    dispatch(fetchPetsRequest({}));
+    dispatch(fetchPetsRequest({ limit: 8 }));
   }, [dispatch]);
 
   const handleDelete = (id) => {

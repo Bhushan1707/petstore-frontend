@@ -8,7 +8,7 @@ import PetFilters from '../../components/pets/PetFilters';
 import PaginationBar from '../../components/common/PaginationBar';
 import Loader from '../../components/common/Loader';
 
-const defaultFilters = { search: '', species: '', breed: '', age: '', page: 1 };
+const defaultFilters = { search: '', species: '', breed: '', age: '', page: 1, limit: 8 };
 
 const HomePage = () => {
   const dispatch = useDispatch();
